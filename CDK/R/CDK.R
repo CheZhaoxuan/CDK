@@ -256,7 +256,7 @@ CDK<-
       # Object: To calculate the GAB matrix
       # Method source:
       #	1.Astle W, Balding DJ. Population Structure and Cryptic Relatedness in Genetic Association Studies, Statistical Science 2009;24:451-471.
-      #   2.Leutenegger AL, Prum, B. , Emmanuelle Génin, Verny, C. , Lemainque, A. , & Clerget-Darpoux, F. , et al. Estimation of the inbreeding coefficient through use of genomic data, American Journal of Human Genetics 2003;73:0-523.
+      # 2.Leutenegger AL, Prum, B. , Emmanuelle Génin, Verny, C. , Lemainque, A. , & Clerget-Darpoux, F. , et al. Estimation of the inbreeding coefficient through use of genomic data, American Journal of Human Genetics 2003;73:0-523.
       #
       # Input:
       # geno: genotype in numeric format, pure 0, 1, 2 matrix; geno is n individual rows by m snps columns
@@ -312,8 +312,6 @@ CDK<-
     GIBS_matrix<-function(geno){
       #--------------------------------------------------------------------------------------------------------
       # Object: To calculate the GIBS matrix
-      # Method source:
-      #
       #
       # Input:
       # geno: genotype in numeric format, pure 0, 1, 2 matrix; geno is n individual rows by m snps columns
@@ -571,9 +569,6 @@ CDK<-
       GAPIT2<-G
 
       return (GAPIT2)}
-
-
-
 
 
     if (method=="VanRaden1"){
