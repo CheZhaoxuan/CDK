@@ -60,7 +60,7 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
-	    maf <- maf[!index.re]
+      maf <- maf[!index.re]
 
       #Calculate Z matrix
       M <- geno
@@ -175,7 +175,7 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
-     	maf <- maf[!index.re]
+      maf <- maf[!index.re]
 
       #Calculate D matrix
       M <- geno
@@ -269,7 +269,7 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
-	    maf <- maf[!index.re]
+      maf <- maf[!index.re]
 
       #Calculate G matrix
       W <- geno
@@ -366,7 +366,7 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
-	    maf <- maf[!index.re]
+      maf <- maf[!index.re]
 
       #Calculate G matrix
       Adj <- 4*sum(maf*(1-maf))
