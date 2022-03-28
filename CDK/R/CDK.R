@@ -28,8 +28,9 @@ CDK<-
     # A: a matrix; A is a pedigree in numeric format                                                         #
     # EV: Eigen values                                                                                       #
     # nPCs: the number of front PCs excluded to calculate kinship                                            #			                                                                           	 #													 #
-    # method: the method for calculating the G matrix;                                                      #
-    #         options are VanRaden1, VanRaden2, VanRaden3, Weighted, GEMMA1, GEMMA2, GAB, Genetic Distance, GIBS, KING, HIERFSTAT, one-SNP haplotype, GAPIT1, GAPIT2						 				 #
+    # method: the method for calculating the G matrix;                                                       #
+    #         options are VanRaden1, VanRaden2, VanRaden3, Weighted, GEMMA1, GEMMA2, GAB, Genetic Distance,  #
+    #                     GIBS, KING, HIERFSTAT, one-SNP haplotype, GAPIT1, GAPIT2						 				       #
     #--------------------------------------------------------------------------------------------------------#
     if (!is.matrix(geno)) stop("geno should be a matrix")
     if (!is.numeric(geno)) stop ("geno contains non numeric values")
@@ -60,12 +61,13 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
-      maf <- maf[!index.re]
-
+	    maf <- maf[!index.re]
+ 
       #Calculate Z matrix
       M <- geno
       P <- maf
-      Z <- as.matrix(M-2*P)
+	    Z <- sweep(M,2,2*P)
+      Z <- as.matrix(Z)
 
       #G=tcrossprod((geno), (geno))
       G <- tcrossprod(Z,Z)
@@ -93,13 +95,15 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
+	    maf <- maf[!index.re]
 
       #Calculate Z matrix
       M <- geno
       nSNP <- ncol(geno)
       nInd <- nrow(geno)
       P <- rep(0.5,nSNP)
-      Z <- as.matrix(M-2*P)
+	    Z <- sweep(M,2,2*P)
+      Z <- as.matrix(Z)
 
       #G=tcrossprod((geno), (geno))
       G <- tcrossprod(Z,Z)
@@ -175,20 +179,20 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
-      maf <- maf[!index.re]
+	    maf <- maf[!index.re]
 
       #Calculate D matrix
       M <- geno
       m <- ncol(geno)
       P <- maf
 
-      D_matrix <- function(x) {1/m*(2*x*(1-x))}
-      D <- diag(D_matrix(P))
+      D_matrix <- function(x) {1/(m*(2*x*(1-x)))}
+      weights <- D_matrix(P)
 
       #G = Z%*%D%*%t(Z)
-      Z <- as.matrix(M-2*P)
-      L <- Z%*%D
-      Weighted <- tcrossprod(L,Z)
+	    Z <- sweep(M,2,2*P)
+      Z <- as.matrix(Z)
+      Weighted <- t(t(Z)*weights)%*%t(Z)
 
       return(Weighted)}
 
@@ -269,7 +273,8 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
-      maf <- maf[!index.re]
+	    maf <- maf[!index.re]
+	    maf <- 2*maf
 
       #Calculate G matrix
       W <- geno
@@ -366,7 +371,7 @@ CDK<-
       Fa <- colMeans(geno,na.rm=T)/2
       index.re <- Fa>=1|Fa<=0
       geno <- geno[,!index.re]
-      maf <- maf[!index.re]
+	    maf <- maf[!index.re]
 
       #Calculate G matrix
       Adj <- 4*sum(maf*(1-maf))
@@ -569,6 +574,9 @@ CDK<-
       GAPIT2<-G
 
       return (GAPIT2)}
+
+
+
 
 
     if (method=="VanRaden1"){
