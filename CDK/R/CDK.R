@@ -437,11 +437,6 @@ CDK<-
       # one-SNP haplotype matrix
       #--------------------------------------------------------------------------------------------------------
 
-      #Remove invariants
-      Fa <- colMeans(geno,na.rm=T)/2
-      index.re <- Fa>=1|Fa<=0
-      geno <- geno[,!index.re]
-
       M <- geno
       nInd <- nrow(M)
       nSNP <- ncol(M)
